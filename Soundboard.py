@@ -18,6 +18,17 @@ A1 = int(A*math.pow(2,1/12)) #10
 B = int(A*math.pow(2,2/12)) #11
 SAMPLERATE = 44100
 
+def render(frequency,amplitude,duration,filename):
+    arr = []
+    for i in range(len(arr1)):
+        try:
+            arr.append([frequency[i],amplitude[i]*0.4,duration[i]])
+        except IndexError:
+            print("Please ensure that all the notes are complete with all 3 inputs (frequency, duration, and Amplitude)")
+    build(arr)
+    compile(filename)
+
+
 def filesize(name):
     with open(name) as f:
         for i, l in enumerate(f):
@@ -35,8 +46,6 @@ def build(arr):
         s = arr[i][1]
         a = arr[i][2]/100*32767
         freq = arr[i][0]
-        print("Freq: " + str(freq))
-        print("A: " + str(a))
         if percent < math.floor(ticks/len(arr)*100):
             percent = math.floor(ticks/len(arr)*100)
             print("Building: " + str(percent) + "%")
