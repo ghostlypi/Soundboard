@@ -20,18 +20,45 @@ pip install -i https://test.pypi.org/simple/ Soundboard
 ## Usage
 
 ```python
-from Soundboard import *
+import __init__ as Soundboard
 
 arr1 =[440 ,450 ,440 ,450 ,440 ,440 ] #Note
 arr2 =[1   ,1   ,1   ,1   ,1   ,1   ] #Duration
 arr3 =[100 ,10  ,90  ,85  ,80  ,75  ] #Amplitude
-arr = []
-for i in range(len(arr1)):
-    arr.append([arr1[i],arr2[i]*0.4,arr3[i]])
-Soundboard.build(arr)
-Soundboard.compile("Octaves.wav")
+Soundboard.render(arr1,arr2,arr3,"test.wav")
 ```
-### Check our [Github](https://github.com/ghostlypi/Soundboard) for more information and tests!
+### Check our [Github](https://github.com/ghostlypi/Soundboard)
+
+##Documentation
+
+###Render
+```python
+Soundboard.render(frequency,duration,amplitude,filename)
+```
+takes in an array of frequencies, and array of durations, and an array of amplitudes and a string filename
+####Note: The arrays must be of equal length or else the program will halt with a notice.
+####Note: The filename string must include a .wav to be playable
+
+###Build
+```python
+Soundboard.build(arr)
+```
+takes in an 2 dimensional array - an sequence of note arrays containing 3 values, frequency, duration, and amplitude
+```python
+Soundboard.build([[frequency,duration,amplitude], ...])
+```
+####Note: The build will fail with an error if all 3 values are not filled in for each and every note.
+####Note: Build will return a file called “Build.txt” containing numerical values for speaker positions
+
+###Compile
+```python
+Soundboard.compile(filename)
+```
+takes in a filename
+####Note: The filename string must include a .wav to be playable
+####Note: Compile will fail if there is no “Build.txt” in the current directory.
+
+##Author: Ghostlypi
 
 ## License
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -51,3 +78,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
