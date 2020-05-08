@@ -20,7 +20,7 @@ pip install -i https://test.pypi.org/simple/ Soundboard
 ## Usage
 
 ```python
-import __init__ as Soundboard
+import Soundboard
 
 arr1 =[440 ,450 ,440 ,450 ,440 ,440 ] #Note
 arr2 =[1   ,1   ,1   ,1   ,1   ,1   ] #Duration
