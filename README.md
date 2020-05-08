@@ -29,17 +29,17 @@ Soundboard.render(arr1,arr2,arr3,"test.wav")
 ```
 ### Check our [Github](https://github.com/ghostlypi/Soundboard)
 
-##Documentation
+## Documentation
 
-###Render
+### Render
 ```python
 Soundboard.render(frequency,duration,amplitude,filename)
 ```
 takes in an array of frequencies, and array of durations, and an array of amplitudes and a string filename
-####Note: The arrays must be of equal length or else the program will halt with a notice.
-####Note: The filename string must include a .wav to be playable
+#### Note: The arrays must be of equal length or else the program will halt with a notice.
+#### Note: The filename string must include a .wav to be playable
 
-###Build
+### Build
 ```python
 Soundboard.build(arr)
 ```
@@ -47,18 +47,18 @@ takes in an 2 dimensional array - an sequence of note arrays containing 3 values
 ```python
 Soundboard.build([[frequency,duration,amplitude], ...])
 ```
-####Note: The build will fail with an error if all 3 values are not filled in for each and every note.
-####Note: Build will return a file called “Build.txt” containing numerical values for speaker positions
+#### Note: The build will fail with an error if all 3 values are not filled in for each and every note.
+#### Note: Build will return a file called “Build.txt” containing numerical values for speaker positions
 
-###Compile
+### Compile
 ```python
 Soundboard.compile(filename)
 ```
 takes in a filename
-####Note: The filename string must include a .wav to be playable
-####Note: Compile will fail if there is no “Build.txt” in the current directory.
+#### Note: The filename string must include a .wav to be playable
+#### Note: Compile will fail if there is no “Build.txt” in the current directory.
 
-##Author: Ghostlypi
+## Author: [Ghostlypi](parthiyer.com)
 
 ## License
 Permission is hereby granted, free of charge, to any person obtaining a copy
