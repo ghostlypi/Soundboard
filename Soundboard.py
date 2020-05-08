@@ -30,12 +30,12 @@ class SoundBoard:
         ticks = 0
         file = open("Build.txt","w")
         phase = 0;
-        lastf = arr[0][1];
+        lastf = arr[0][0];
         lasta = 0;
         for i in range(len(arr)):
-            s = arr[i][2]
-            a = arr[i][3]/100*32767
-            freq = arr[i][1]
+            s = arr[i][1]
+            a = arr[i][2]/100*32767
+            freq = arr[i][0]
             if percent < math.floor(ticks/len(arr)*100):
                 percent = math.floor(ticks/len(arr)*100)
                 print("Building: " + str(percent) + "%")
@@ -44,8 +44,7 @@ class SoundBoard:
                     phase += j-SoundBoard.SAMPLERATE*s
                     break;
             for j in range(int(SoundBoard.SAMPLERATE*s)):
-                if int(SoundBoard.SAMPLERATE*s) % int(SoundBoard.SAMPLERATE*s)/1000:
-                    lasta += (a-lasta)*0.001
+                lasta += (a-lasta)*0.1
                 file.write(str(int(math.sin(freq*(j+phase)*2*math.pi/SoundBoard.SAMPLERATE)*lasta))+"\n")
             ticks += 1;
             lastf = freq;
@@ -92,6 +91,6 @@ class SoundBoard:
 
         wav_file.close()
         build.close()
-        os.remove("Build.txt")
+        #os.remove("Build.txt")
 
         return
