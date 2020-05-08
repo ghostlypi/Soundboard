@@ -1,10 +1,10 @@
 # Soundboard
 
-Foobar is a Python library for dealing with word pluralization.
+Soundboard is a Python library for dealing with word pluralization.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Soundboard.
 For windows:
 
 ```batch
@@ -28,8 +28,8 @@ arr3 =[100 ,10  ,90  ,85  ,80  ,75  ] #Amplitude
 arr = []
 for i in range(len(arr1)):
     arr.append([arr1[i],arr2[i]*0.4,arr3[i]])
-SoundBoard.build(arr)
-SoundBoard.compile("Octaves.wav")
+Soundboard.build(arr)
+Soundboard.compile("Octaves.wav")
 ```
 ### Check our [Github](https://github.com/ghostlypi/Soundboard) for more information and tests!
 
