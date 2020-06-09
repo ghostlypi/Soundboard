@@ -18,27 +18,26 @@ A1 = int(A*math.pow(2,1/12)) #10
 B = int(A*math.pow(2,2/12)) #11
 SAMPLERATE = 44100
 
-def render(frequency,amplitude,duration,filename):
-    arr = []
-    for i in range(len(arr1)):
-        try:
-            arr.append([frequency[i],amplitude[i]*0.4,duration[i]])
-        except IndexError:
-            print("Please ensure that all the notes are complete with all 3 inputs (frequency, duration, and Amplitude)")
-    build(arr)
-    compile(filename)
-
-
 def filesize(name):
     with open(name) as f:
         for i, l in enumerate(f):
             pass
     return i + 1
 
-def build(arr):
+def render(frequency,duration,amplitude,filename):
+    arr = []
+    for i in range(len(frequency)):
+        try:
+            arr.append([frequency[i],duration[i]*0.4,amplitude[i]])
+        except IndexError:
+            print("Please ensure that all the notes are complete with all 3 inputs (frequency, duration, and Amplitude)")
+    build(arr,str(filename))
+    make(str(filename))
+
+def build(arr,name):
     percent = -1
     ticks = 0
-    file = open("Build.txt","w")
+    file = open(name+".txt","w")
     phase = 0;
     lastf = arr[0][0];
     lasta = 0;
@@ -60,10 +59,43 @@ def build(arr):
         lastf = freq;
     return
 
-def compile(file_name):
+def add(track1,track2,newname):
+    file = open(str(newname+".txt"),"w")
+    file1 = open(str(track1+".txt"),"r")
+    file2 = open(str(track2+".txt"),"r")
+    ticks = max([filesize(track1+".txt"),filesize(track2+".txt")])
+    percent = 0
+    for i in range(ticks):
+        if percent < math.floor(i/ticks*100):
+            percent = math.floor(i/ticks*100)
+            print("Adding: " + str(percent) + "%")
+        string1 = file1.readline()[:-2]
+        if string1 == "":
+            string1 = "0"
+        elif string1 == "-":
+            string1 = "0"
+        elif string1 == " ":
+            string1 = "0"
+        string2 = file2.readline()[:-2]
+        if string2 == "":
+            string2 = "0"
+        elif string2 == "-":
+            string2 = "0"
+        elif string2 == " ":
+            string2 = "0"
+        num = (int(string1)+int(string2))
+        if num > 32767:
+            num = 32767
+        file.write(str(num)+"\n")
+
+
+
+
+
+def make(file_name):
     # Open up a wav file
-    wav_file=wave.open(file_name,"w")
-    build = open("Build.txt","r")
+    wav_file=wave.open(file_name+".wav","w")
+    build = open(str(file_name+".txt"),"r")
 
     # wav params
     nchannels = 1
@@ -73,7 +105,7 @@ def compile(file_name):
     # 44100 is the industry standard sample rate - CD quality.  If you need to
     # save on file size you can adjust it downwards. The stanard for low quality
     # is 8000 or 8kHz.
-    nframes = filesize("Build.txt")
+    nframes = filesize(file_name+".txt")
     comptype = "NONE"
     compname = "not compressed"
     wav_file.setparams((nchannels, sampwidth, sample_rate, nframes, comptype, compname))
@@ -92,6 +124,8 @@ def compile(file_name):
             string = "0"
         elif string == "-":
             string = "0"
+        elif string == " ":
+            string = "0"
         wav_file.writeframes(struct.pack('h',int(string)))
         ticks+=1
         if percent < math.floor(ticks/nframes*100):
@@ -101,6 +135,5 @@ def compile(file_name):
 
     wav_file.close()
     build.close()
-    os.remove("Build.txt")
 
     return
