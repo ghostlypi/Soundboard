@@ -100,7 +100,7 @@ def make(file_name):
     sampwidth = 2
 
     # 44100 is the industry standard sample rate - CD quality.  If you need to
-    # save on file size you can adjust it downwards. The stanard for low quality
+    # save on file size you can adjust it downwards. The standard for low quality
     # is 8000 or 8kHz.
     nframes = filesize(file_name+".txt")
     comptype = "NONE"
@@ -109,7 +109,7 @@ def make(file_name):
 
     # WAV files here are using short, 16 bit, signed integers for the
     # sample size.  So we multiply the floating point data we have by 32767, the
-    # maximum value for a short integer.  NOTE: It is theortically possible to
+    # maximum value for a short integer.  NOTE: It is theoretically possible to
     # use the floating point -1.0 to 1.0 data directly in a WAV file but not
     # obvious how to do that using the wave module in python.
     ticks = 0
