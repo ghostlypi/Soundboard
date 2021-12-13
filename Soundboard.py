@@ -1,7 +1,6 @@
 import math
 import wave
 import struct
-import os
 
 A = 440
 C = int(A*math.pow(2,-9/12)) #0
@@ -47,7 +46,7 @@ def build(arr,name):
         freq = arr[i][0]
         if percent < math.floor(ticks/len(arr)*100):
             percent = math.floor(ticks/len(arr)*100)
-            print("Building: " + str(percent) + "%")
+            print("\rBuilding: " + str(percent) + "%", end="")
         for j in range(int(SAMPLERATE*s)+10000):
             if(int(math.sin(freq*(j+phase)*2*math.pi/SAMPLERATE)*a)==int(math.sin(lastf*(j+phase)*2*math.pi/SAMPLERATE)*lasta)):
                 phase += j-SAMPLERATE*s
@@ -68,7 +67,7 @@ def add(track1,track2,newname):
     for i in range(ticks):
         if percent < math.floor(i/ticks*100):
             percent = math.floor(i/ticks*100)
-            print("Adding: " + str(percent) + "%")
+            print("\rAdding: " + str(percent) + "%", end="")
         string1 = file1.readline()[:-2]
         if string1 == "":
             string1 = "0"
@@ -84,13 +83,11 @@ def add(track1,track2,newname):
         elif string2 == " ":
             string2 = "0"
         num = (int(string1)+int(string2))
-        if num > 32767:
-            num = 32767
         file.write(str(num)+"\n")
 
-
-
-
+def amplify(track, percent):
+    #Skip for now
+    return
 
 def make(file_name):
     # Open up a wav file
@@ -130,7 +127,7 @@ def make(file_name):
         ticks+=1
         if percent < math.floor(ticks/nframes*100):
            percent = math.floor(ticks/nframes*100)
-           print("Compiling: " + str(percent) + "%")
+           print("\rCompiling: " + str(percent) + "%", end="")
 
 
     wav_file.close()

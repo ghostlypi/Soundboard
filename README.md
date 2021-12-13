@@ -45,7 +45,7 @@ Soundboard.make("Combotest")
 Soundboard.render(frequency,duration,amplitude,filename)
 ```
 takes in an array of frequencies, and array of duration, and an array of amplitudes and a string filename
-#### Note: The arrays must be of equal length or else the program will halt with a notice.
+#### Note: The arrays must be of equal length or else the program will error.
 
 ### Add
 ```python
@@ -70,7 +70,7 @@ Soundboard.build([[frequency,duration,amplitude], ...])
 Soundboard.make(filename)
 ```
 takes in a filename
-#### Note: Compile will fail if there is no "Build.txt" in the current directory.
+#### Note: Make will fail if there is no "Build.txt" in the current directory.
 
 ## Author: [Ghostlypi](parthiyer.com)
 
