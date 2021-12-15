@@ -2,20 +2,38 @@ import math
 import wave
 import struct
 
-A = 440
-C = int(A*math.pow(2,-9/12)) #0
-C1 = int(A*math.pow(2,-8/12)) #1
-D = int(A*math.pow(2,-7/12)) #2
-D1 = int(A*math.pow(2,-6/12)) #3
-E = int(A*math.pow(2,-5/12)) #4
-F = int(A*math.pow(2,-4/12)) #5
-F1 = int(A*math.pow(2,-3/12)) #6
-G = int(A*math.pow(2,-2/12)) #7
-G1 = int(A*math.pow(2,-1/12)) #8
-A = int(A*math.pow(2,0/12)) #9
-A1 = int(A*math.pow(2,1/12)) #10
-B = int(A*math.pow(2,2/12)) #11
 SAMPLERATE = 44100
+DRANGE = 2**15-1
+
+def note(string, oct):
+    string = string.upper()
+    num = 0;
+    if string == "A1":
+        num = 1
+    elif string == "B":
+        num = 2
+    elif string == "C":
+        num = -9
+    elif string == "C1":
+        num = -8
+    elif string == "D":
+        num = -7
+    elif string == "D1":
+        num = -6
+    elif string == "E":
+        num = -5
+    elif string == "F":
+        num = -4
+    elif string == "F1":
+        num = -3
+    elif string == "G":
+        num = -2
+    elif string == "G1":
+        num = -1
+
+    offset_A = BASE_A * math.pow(2, oct)
+
+    return int(offset_A * math.pow(2, num/12))
 
 def filesize(name):
     with open(name) as f:
@@ -42,7 +60,7 @@ def build(arr,name):
     lasta = 0;
     for i in range(len(arr)):
         s = arr[i][1]
-        a = arr[i][2]/100*32767
+        a = arr[i][2]/100*DRANGE
         freq = arr[i][0]
         if percent < math.floor(ticks/len(arr)*100):
             percent = math.floor(ticks/len(arr)*100)
@@ -85,9 +103,50 @@ def add(track1,track2,newname):
         num = (int(string1)+int(string2))
         file.write(str(num)+"\n")
 
-def amplify(track, percent):
-    #Skip for now
-    return
+def amplify(track, factor):
+    output = ""
+    file = open(str(track + ".txt"), "r")
+    ticks = filesize(track + ".txt")
+    percent = 0
+    for i in range(ticks):
+        string = file.readline()[:-2]
+        if string == "":
+            string = "0"
+        elif string == "-":
+            string = "0"
+        elif string == " ":
+            string = "0"
+        num = int(int(string) * factor)
+        output += str(num) + "\n"
+    file.close()
+    file = open(str(track + ".txt"), "w")
+    file.write(output)
+    file.close()
+
+def clip(track):
+    output = ""
+    file = open(str(track + ".txt"), "r")
+    ticks = filesize(track + ".txt")
+    percent = 0
+    for i in range(ticks):
+        string = file.readline()[:-2]
+        if string == "":
+            string = "0"
+        elif string == "-":
+            string = "0"
+        elif string == " ":
+            string = "0"
+        num = int(string)
+        if num > DRANGE:
+            num = DRANGE
+        elif num < -1*DRANGE:
+            num = -1*DRANGE
+        output += str(num)+"\n"
+    file.close()
+    file = open(str(track + ".txt"), "w")
+    file.write(output)
+    file.close()
+
 
 def make(file_name):
     # Open up a wav file
@@ -116,14 +175,14 @@ def make(file_name):
     percent = -1
     string = ""
     for i in range(nframes):
-        string = build.readline()[:-2]
+        string = build.readline()[:-1]
         if string == "":
             string = "0"
         elif string == "-":
             string = "0"
         elif string == " ":
             string = "0"
-        wav_file.writeframes(struct.pack('h',int(string)))
+        wav_file.writeframes(struct.pack('h', int(string)))
         ticks+=1
         if percent < math.floor(ticks/nframes*100):
            percent = math.floor(ticks/nframes*100)
@@ -134,3 +193,17 @@ def make(file_name):
     build.close()
 
     return
+
+BASE_A = 440
+C  = note("c", 0)  # -9
+C1 = note("c1", 0) # -8
+D  = note("d", 0)  # -7
+D1 = note("d1", 0) # -6
+E  = note("e", 0)  # -5
+F  = note("f", 0)  # -4
+F1 = note("f1", 0) # -3
+G  =  note("g", 0) # -2
+G1 = note("g", 0)  # -1
+A  = note("a", 0)  #  0
+A1 = note("a1", 0) #  1
+B  = note("b", 0)  #  2
