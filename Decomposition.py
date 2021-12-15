@@ -21,33 +21,15 @@ def unmake(name):
             percent = math.floor(ticks / nframes * 100)
             print("\rUncompiling: " + str(percent) + "%", end="")
     wav_file.close()
-    build = open(name + ".txt", "w")
+    build = open(name + ".sbld", "w")
     build.write(string)
     build.close()
 
-def plot(name):
-    file = open(name + ".txt", "r")
-    signal = []
-    N = filesize(name + ".txt")
-    for i in range(N):
-        signal.append(file.readline()[:-1])
-
 def spectrum(name):
-    file = open(name+".txt","r")
+    file = open(name+".sbld","r")
     signal = []
-    N = filesize(name + ".txt")
+    N = filesize(name + ".sbld")
     for i in range(N):
         signal.append(int(file.readline()[:-1])/DRANGE)
     return scipy.signal.spectrogram(np.array(signal), SAMPLERATE, nfft=2^16)
 
-def spectrogram(name):
-    file = open(name + ".txt", "r")
-    signal = []
-    N = filesize(name + ".txt")
-    for i in range(N):
-        signal.append(int(file.readline()[:-1]) / DRANGE)
-    f, t, Sxx = scipy.signal.spectrogram(np.array(signal), SAMPLERATE, nfft=4096)
-    plt.pcolormesh(t, f[0:80], Sxx[0:80])
-    plt.ylabel('Frequency [Hz]')
-    plt.xlabel('Time [sec]')
-    plt.show()

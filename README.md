@@ -13,7 +13,7 @@ py -m pip install Soundboard
 ```
 For Mac/Linux:
 ```bash
-pip install Soundboard
+pip3 install Soundboard
 ```
 
 ## Usage
@@ -40,37 +40,52 @@ Soundboard.make("Combotest")
 ### Check our [GitHub](https://github.com/ghostlypi/Soundboard)
 ## Documentation
 
-### Render
+### Render (Soundboard.Soundboard)
 ```python
 Soundboard.render(frequency,duration,amplitude,filename)
 ```
 takes in an array of frequencies, and array of duration, and an array of amplitudes and a string filename
 #### Note: The arrays must be of equal length or else the program will error.
 
-### Add
+### Add (Soundboard.Soundboard)
 ```python
 Soundboard.add(track1,track2,output_file_name)
 ```
 takes in 2 track build files and outputs a new build file that includes both tracks merged together
 #### Note: You have to "make" the added files or else you will not be able to play the sound
-### Build
+### Build (Soundboard.Soundboard)
 ```python
-Soundboard.build(arr)
+Soundboard.build(arr, name)
 ```
 takes in an 2 dimensional array - an sequence of note arrays containing 3 values, frequency, duration, and amplitude
 ```python
-Soundboard.build([[frequency,duration,amplitude], ...])
+Soundboard.build([[frequency,duration,amplitude], ...], name)
 ```
 
 #### Note: The build will fail with an error if all 3 values are not filled in for each and every note.
-#### Note: Build will return a file called "Build.txt" containing numerical values for speaker positions
+#### Note: Build will return a file called "<name>.sbld" containing numerical values for speaker positions
 
-### Make
+### Make (Soundboard.Soundboard)
 ```python
 Soundboard.make(filename)
 ```
 takes in a filename
 #### Note: Make will fail if there is no "Build.txt" in the current directory.
+
+### Unmake (Soundboard.Decomposition)
+```python
+Soundboard.unmake(filename)
+```
+
+given a .wav file, this will output the build output
+#### Note: unmake only works on 16 bit integer wav files. Other formats are currently unsupported.
+
+### Spectrum (Soundboard.Decomposition)
+```python
+Soundboard.spectrum(filename)
+```
+
+given a .sbld file, this will output the spectrum
 
 ## Author: [Ghostlypi](parthiyer.com)
 

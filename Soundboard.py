@@ -54,7 +54,7 @@ def render(frequency,duration,amplitude,filename):
 def build(arr,name):
     percent = -1
     ticks = 0
-    file = open(name+".txt","w")
+    file = open(name+".sbld","w")
     phase = 0;
     lastf = arr[0][0];
     lasta = 0;
@@ -77,10 +77,10 @@ def build(arr,name):
     return
 
 def add(track1,track2,newname):
-    file = open(str(newname+".txt"),"w")
-    file1 = open(str(track1+".txt"),"r")
-    file2 = open(str(track2+".txt"),"r")
-    ticks = max([filesize(track1+".txt"),filesize(track2+".txt")])
+    file = open(str(newname+".sbld"),"w")
+    file1 = open(str(track1+".sbld"),"r")
+    file2 = open(str(track2+".sbld"),"r")
+    ticks = max([filesize(track1+".sbld"),filesize(track2+".sbld")])
     percent = 0
     for i in range(ticks):
         if percent < math.floor(i/ticks*100):
@@ -105,8 +105,8 @@ def add(track1,track2,newname):
 
 def amplify(track, factor):
     output = ""
-    file = open(str(track + ".txt"), "r")
-    ticks = filesize(track + ".txt")
+    file = open(str(track + ".sbld"), "r")
+    ticks = filesize(track + ".sbld")
     percent = 0
     for i in range(ticks):
         string = file.readline()[:-2]
@@ -125,8 +125,8 @@ def amplify(track, factor):
 
 def clip(track):
     output = ""
-    file = open(str(track + ".txt"), "r")
-    ticks = filesize(track + ".txt")
+    file = open(str(track + ".sbld"), "r")
+    ticks = filesize(track + ".sbld")
     percent = 0
     for i in range(ticks):
         string = file.readline()[:-2]
@@ -143,7 +143,7 @@ def clip(track):
             num = -1*DRANGE
         output += str(num)+"\n"
     file.close()
-    file = open(str(track + ".txt"), "w")
+    file = open(str(track + ".sbld"), "w")
     file.write(output)
     file.close()
 
@@ -151,7 +151,7 @@ def clip(track):
 def make(file_name):
     # Open up a wav file
     wav_file=wave.open(file_name+".wav","w")
-    build = open(str(file_name+".txt"),"r")
+    build = open(str(file_name+".sbld"),"r")
 
     # wav params
     nchannels = 1
@@ -161,7 +161,7 @@ def make(file_name):
     # 44100 is the industry standard sample rate - CD quality.  If you need to
     # save on file size you can adjust it downwards. The standard for low quality
     # is 8000 or 8kHz.
-    nframes = filesize(file_name+".txt")
+    nframes = filesize(file_name+".sbld")
     comptype = "NONE"
     compname = "not compressed"
     wav_file.setparams((nchannels, sampwidth, sample_rate, nframes, comptype, compname))
