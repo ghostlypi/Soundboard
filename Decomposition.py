@@ -1,6 +1,5 @@
 import numpy as np
 import scipy.signal
-from matplotlib import pyplot as plt
 
 from Soundboard import *
 
